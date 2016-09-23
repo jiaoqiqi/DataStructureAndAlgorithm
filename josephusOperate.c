@@ -19,10 +19,9 @@ NodeType *CreaList(NodeType *pHead ,int n){
 	NodeType *p,*t;
 	int i=0;
 	int id,iPassword = 0 ;
-	// NodeType *pNew = NULL;
-	// NodeType *pCur = NULL;
+
 	for (i=1 ; i<=n ; i++){
-		// printf("请输入第%d个人的密码" , i);
+		printf("请输入第%d个人的密码" , i);
 		scanf("%d" ,&iPassword);
 		p=(NodeType *)malloc(sizeof(NodeType));
 		p->password=iPassword;
@@ -37,7 +36,7 @@ NodeType *CreaList(NodeType *pHead ,int n){
 			t=p;
 		}
 	}
-	// printf("Complite the list create\n");
+	printf("Complite the list create\n");
 	return pHead;
 }
 
@@ -55,16 +54,16 @@ NodeType *GetNode(int iId , int iPassword){
 	return pNew;
 }
 
-// void PritList(NodeType *pHead){
-// 	NodeType *pCur = pHead;
-// 	if(!IsEmptyList(pHead)){
-// 		// printf("--ID-- -- PASSWORD--\n");
-// 		do{
-// 			printf("%3d %7d\n",pCur->id , pCur->password );
-// 			pCur = pCur->next;
-// 		}while(pCur != pHead);
-// 	}
-// }
+void PritList(NodeType *pHead){
+	NodeType *pCur = pHead;
+	if(!IsEmptyList(pHead)){
+		// printf("--ID-- -- PASSWORD--\n");
+		do{
+			printf("%3d %7d\n",pCur->id , pCur->password );
+			pCur = pCur->next;
+		}while(pCur != pHead);
+	}
+}
 
 int IsEmptyList(NodeType *pHead){
 	if(!pHead){
@@ -109,15 +108,15 @@ int main(){
 			printf("the people is to much\n");
 
 		}
-		printf("the most numer is: %d",MAX );
+		printf("the most numer is: %d \n",MAX );
 		scanf("%d" ,&n);
 	}while( n > MAX);
-	// printf("Please input the original password:");
+	printf("Please input the original password:");
 	scanf("%d" ,&m);
 	pHead=CreaList(pHead,n);
-	// printf("\n ----------printf the circle list----------\n" );
-	// PritList(pHead);
-	// printf("\n ----------printf the queued list----------\n" );
+	printf("\n ----------printf the circle list----------\n" );
+	PritList(pHead);
+	printf("\n ----------printf the queued list----------\n" );
 	JosephusOperate(pHead,m);
 	return 1;
 }
