@@ -70,63 +70,63 @@ void PrintPolyn(Polyn P)
 
 Polyn AddPolyn(Polyn pa,Polyn pb)          
 {
-	Polyn qa = pa -> next;
-	Polyn qb = pb -> next;
+	Polyn qa=pa->next;
+	Polyn qb=pb->next;
 	Polyn headc,pc,qc;
-	pc = (Polyn)malloc(sizeof(struct Polynomial));
-	pc -> next = NULL;
-	headc = pc;
-	while(qa != NULL && qb != NULL)
+	pc=(Polyn)malloc(sizeof(struct Polynomial));
+	pc->next=NULL;
+	headc=pc;
+	while(qa!=NULL && qb!=NULL)
 	{
-		qc = (Polyn)malloc(sizeof(struct Polynomial));
-		if(qa -> expn < qb -> expn)
+		qc=(Polyn)malloc(sizeof(struct Polynomial));
+		if(qa->expn<qb->expn)
 		{
-			qc -> coef = qa -> coef;
-			qc -> expn = qa -> expn;
-			qa = qa -> next;
+			qc->coef=qa->coef;
+			qc->expn=qa->expn;
+			qa=qa->next;
 		}
-		else if(qa -> expn == qb -> expn)
+		else if(qa->expn == qb->expn)
 		{
-			qc -> coef = qa -> coef + qb -> coef;
-			qc -> expn = qa -> expn;
-			qa = qa -> next;
-			qb = qb -> next;
+			qc->coef=qa->coef+qb->coef;
+			qc->expn=qa->expn;
+			qa=qa->next;
+			qb=qb->next;
 		}
 		else
 		{
-			qc -> coef = qb -> coef;
-			qc -> expn = qb -> expn;
-			qb = qb -> next;
+			qc->coef=qb->coef;
+			qc->expn=qb->expn;
+			qb=qb->next;
 		}
 
-		if(qc -> coef != 0)
+		if(qc->coef!=0)
 		{
-			qc -> next = pc -> next;
-			pc -> next = qc;
-			pc = qc; 
+			qc->next=pc->next;
+			pc->next=qc;
+			pc=qc;
 		}
 		else
 			free(qc);
 	}
-	while(qa != NULL)
+	while(qa!=NULL)
 	{
 		qc=(Polyn)malloc(sizeof(struct Polynomial));
-		qc -> coef = qa -> coef;
-		qc -> expn = qa -> expn;
-		qa = qa -> next;
-		qc -> next = pc -> next;
-		pc -> next = qc;
-		pc = qc;
+		qc->coef=qa->coef;
+		qc->expn=qa->expn;
+		qa=qa->next;
+		qc->next=pc->next;
+		pc->next=qc;
+		pc=qc;
 	}
 	while(qb!=NULL)
 	{
 		qc=(Polyn)malloc(sizeof(struct Polynomial));
-		qc -> coef = qb -> coef;
-		qc -> expn = qb -> expn;
-		qb = qb -> next;
-		qc -> next = pc -> next;
-		pc -> next = qc;
-		pc = qc;
+		qc->coef=qb->coef;
+		qc->expn=qb->expn;
+		qb=qb->next;
+		qc->next=pc->next;
+		pc->next=qc;
+		pc=qc;
 	}
 	return headc;
 }
@@ -146,6 +146,8 @@ Polyn SubtractPolyn(Polyn pa,Polyn pb)
 	p->coef*=-1;
 	return pd;
 }
+
+
 
 int main()
 {
