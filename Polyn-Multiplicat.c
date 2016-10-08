@@ -116,13 +116,49 @@ Polyn MergePolyn(Polyn h)
 	}
 	return h;
 }
-
+Polyn sort(Polyn head,int count)
+{
+	Polyn p;
+	int i,j,t;
+	for(i=0;i<count-1;i++)
+	{
+		p=head->next;
+		for(j=0;j<count-1-i;j++,p=p->next)
+		{
+			if(p->expn>p->next->expn)
+			{
+				t=p->expn;
+				p->expn=p->next->expn;
+				p->next->expn=t;
+				t=p->coef;
+				p->coef=p->next->coef;
+				p->next->coef=t;
+			}
+		}
+	}
+	return head;
+}
+int Getlen(Polyn head)
+{
+	int j=0;
+	Polyn p=head;
+	while(p->next != NULL)
+	{
+		j++;
+		p = p->next;
+	}
+	return j;
+}
 int main()
 {
 	Polynomial *head1,*head2,*head3;                  
 	head1=CreatePoly();                               
 	head2=CreatePoly();                               
 	head3=MultiplicatPolyn(head1,head2); 
-	head3=MergePolyn(head3);                            	
+
+	head3 = sort(head3,Getlen(head1)*Getlen(head2));
+	head3=MergePolyn(head3);
+                        	
+
 	PrintPolyn(head3);                                
 }
