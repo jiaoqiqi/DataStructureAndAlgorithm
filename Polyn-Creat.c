@@ -45,7 +45,7 @@ void PrintPolyn(Polyn P)
 		return ;
 	}
 	while(q)
-	{
+	{ 
 		if(q -> coef > 0 && flag != 1)  putchar('+');
 		if(q -> coef != 1 && q -> coef != -1)
 		{
