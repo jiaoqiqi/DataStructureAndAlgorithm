@@ -1,240 +1,218 @@
-#include <stdio.h>
-#include <stdlib.h>
-#define STACK_SIZE 100    	
-#define STACKINCREMENT 10   
-#define N 8 				
-int weight[N][N];			
-int Board[N][N][8];			
-typedef struct{		
+#include<stdio.h>
+#include<stdlib.h>
+#define STACK_SIZE 100
+#define STACKINCREMENT 10
+#define N 8
+int weight[N][N];
+int Board[N][N][8];
+typedef struct
+{
 	int x;
 	int y;
-}posType;
-typedef struct{		
-	int ord;
-	posType seat;	
-	int di;			
-}elemType;
-typedef struct{	
-	elemType *base;
-	elemType *top;
-	int stacksize;
-}sqStack;
-sqStack s;
-int initStack()
+}PosType;
+typedef struct
 {
-	s.base = (elemType *)malloc(STACK_SIZE*sizeof(elemType));
-	if(!s.base) return 0;
+	int ord;
+	PosType seat;
+	int di;
+}ElemType;
+typedef struct
+{
+	ElemType *base;
+	ElemType *top;
+	int stacksize;
+}SqStack;
+SqStack s;
+int InitStack()
+{
+	s.base = (ElemType *)malloc(STACK_SIZE*sizeof(ElemType));
+	if (!s.base)return 0;
 	s.top = s.base;
 	s.stacksize = STACK_SIZE;
 	return 1;
 }
-elemType getTop()
+ElemType GetTop()
 {
 	if (s.top == s.base)
 		exit(0);
-	return *(s.top-1);
+	return *(s.top - 1);
 }
-void Push(elemType elem)
+void Push(ElemType elem)
 {
-	*s.top++=elem;
+	*s.top++ = elem;
 }
-int Pop(elemType *elem)
+
+int Pop(ElemType *elem)
 {
-	if(s.top == s.base)
+	if (s.top == s.base) return 1;
 	*elem = *--s.top;
 	return 1;
 }
-int stackEmpty()
+
+int StackEmpty()
 {
-	if(s.top == s.base)
-		return 1;
-	else 
-		return 0;
+	if (s.top == s.base)return 1;
+	else return 0;
 }
-void outputPath()
+
+void OutputPath()
 {
-	int i,f,k;
-	sqStack s1 = s;
+	int i, f, k;
+	SqStack s1 = s;
 	int path[N][N];
-	for (i = 0; s1.top != s1.base; ++i)
+	for (i = 0; s1.top != s1.base; i++)
 	{
-		path[(*s1.base).seat.x][(*s1.base).seat.y] = i+1;
+		path[(*s1.base).seat.x][(*s1.base).seat.y] = i + 1;
 		++s1.base;
 	}
 	for (f = 0; f < N; f++)
 	{
 		printf("\n");
-		for (k = 0; k < N; ++k)
-		{
-			printf("\t%d", (path[f][k]));
-		}
+		for (k = 0; k < N; k++)printf("\t%d", (path[f][k]));
 	}
 	printf("\n");
 }
-int Pass(posType curpos) 	//判断当前位置是否合法
+int Pass(PosType curpos)
 {
-	sqStack s1 = s;
-	if(curpos.x < 0 || curpos.x >(N-1) || curpos.y < 0 || curpos.y > (N-1))
-		return 0;
-	for(;s1.top != s1.base;)
+	SqStack s1 = s;
+	if (curpos.x<0 || curpos.x>(N - 1) || curpos.y<0 || curpos.y>(N - 1))return 0;
+	for (; s1.top != s1.base;)
 	{
 		--s1.top;
-		if(curpos.x == (*s1.top).seat.x && curpos.y == (*s1.top).seat.y)
-			return 0;
+		if (curpos.x == (*s1.top).seat.x&&curpos.y == (*s1.top).seat.y)return 0;
 	}
 	return 1;
 }
-posType nextPos(posType curpos,int direction)
+
+PosType NextPos(PosType curpos, int direction)
 {
-	switch(direction)
+	switch (direction)
 	{
-		case 1: 
-			curpos.x += 1;
-			curpos.y -= 2;
-			break;
-		case 2:
-			curpos.x += 2;
-			curpos.y -+ 1;
-			break;
-		case 3:
-			curpos.x += 2;
-			curpos.y += 1;
-			break;
-		case 4:
-			curpos.x += 1;
-			curpos.y += 2;
-			break;
-		case 5:
-			curpos.x -= 1;
-			curpos.y += 2;
-			break;
-		case 6:
-			curpos.x -= 2;
-			curpos.y += 1;
-			break;
-		case 7:
-			curpos.x -= 2;
-			curpos.y -= 1;
-			break;
-		case 8:
-			curpos.x -= 1;
-			curpos.y -= 2;
-			break; 		
+	case 1:curpos.x += 1; curpos.y -= 2; break;
+	case 2:curpos.x += 2; curpos.y -= 1; break;
+	case 3:curpos.x += 2; curpos.y += 1; break;
+	case 4:curpos.x += 1; curpos.y += 2; break;
+	case 5:curpos.x -= 1; curpos.y += 2; break;
+	case 6:curpos.x -= 2; curpos.y += 1; break;
+	case 7:curpos.x -= 2; curpos.y -= 1; break;
+	case 8:curpos.x -= 1; curpos.y -= 2; break;
 	}
 	return curpos;
 }
-void setWeight()
+
+void setweight()
 {
-	int i,j,k;
-	posType m;
-	elemType elem;
-	for (i = 0; i < N; ++i)
+	int i, j, k;
+	PosType m;
+	ElemType elem;
+	for (i = 0; i < N; i++)
 	{
-		for (j = 0; j < N; ++j)
+		for (j = 0; j < N; j++)
 		{
 			elem.seat.x = i;
 			elem.seat.y = j;
 			weight[i][j] = 0;
-			for(k = 0; k < N; k++)
+			for (k = 0; k < 8; k++)
 			{
-				m = nextPos(elem.seat,k+1);
-				if(m.x >= 0 && m.x < N && m.y >= 0 && m.y < N)
+				m = NextPos(elem.seat, k + 1);
+				if (m.x >= 0 && m.x < N&&m.y >= 0 && m.y < N)
 					weight[i][j]++;
 			}
 		}
 	}
 }
-void setMap()
+
+void setmap()
 {
-	int a[N];
-	int i,j,k,min,m,s,h;
-	posType n1,n2;
-	for (i = 0; i < N; ++i)
+	int a[8];
+	int i, j, k, m, min, s, h;
+	PosType n1, n2;
+	for (i = 0; i < N; i++)
 	{
-		for(j = 0; j < N; j++)
+		for (j = 0; j < N; j++)
 		{
-			for(h = 0; h < N; h++)
+			for (h = 0; h < 8; h++)
 			{
 				n2.x = i;
 				n2.y = j;
-				n1 = nextPos(n2,h+1);
-				if(n1.x >= 0 && n1.x < N && n1.y >= 0 && n1.y < N)
-					a[h] = weight[n1.x][n1.y];
-				else 
-					a[h] = 0;
+				n1 = NextPos(n2, h + 1);
+				if (n1.x >= 0 && n1.x < N&&n1.y >= 0 && n1.y < N) a[h] = weight[n1.x][n1.y];
+				else a[h] = 0;
 			}
-			for(m = 0; m < N; m++)
+			for (m = 0; m < 8; m++)
 			{
-				min = N+1;
-				for(k = 0; k < N; k++)
+				min = 9;
+				for (k = 0; k < 8; k++)
+				if (min>a[k])
 				{
-					if(min > a[k])
-					{
-						min = a[k];
-						Board[i][j][m] = k;
-						s = k;
-					}
-					a[s] = N+1;
+					min = a[k];
+					Board[i][j][m] = k;
+					s = k;
 				}
+				a[s] = 9;
 			}
 		}
 	}
 }
-int horsePath(posType start)
+
+int HorsePath(PosType start)
 {
-	posType curpos;
-	int horsestep = 0,off;
-	elemType elem;
+	PosType curpos;
+	int horsestep = 0, off;
+	ElemType elem;
 	curpos = start;
 	do{
-		if(Pass(curpos))
+		if (Pass(curpos))
 		{
 			horsestep++;
 			elem.di = 0;
 			elem.ord = horsestep;
 			elem.seat = curpos;
 			Push(elem);
-			if(N*N == horsestep)
-				return 1;
-			off = Board[elem.seat.x][elem.seat.y][elem.di]+1;
-			curpos = nextPos(elem.seat,off);
+			if (N*N == horsestep)return 1;
+			off = Board[elem.seat.x][elem.seat.y][elem.di] + 1;
+			curpos = NextPos(elem.seat, off);
 		}
 		else
 		{
-			if(!stackEmpty())
+			if (!StackEmpty())
 			{
-				while(!stackEmpty() && elem.di ==N)
+				while (!StackEmpty() && elem.di == 8)
 				{
 					Pop(&elem);
-					if(!stackEmpty())
+					if (!StackEmpty())
 					{
-						elem = getTop();
+						elem = GetTop();
 						horsestep = elem.ord;
 					}
 				}
-				if(!stackEmpty() && elem.di < N)
+				if (!StackEmpty() && elem.di < 8)
 				{
 					Pop(&elem);
 					off = Board[elem.seat.x][elem.seat.y][++elem.di];
-					curpos = nextPos(elem.seat,off+1);
+					curpos = NextPos(elem.seat, off + 1);
 					Push(elem);
 				}
 			}
 		}
-	}while(!stackEmpty());
-	printf("%s\n","走不通");
+	} while (!StackEmpty());
+	printf("can't be reached");
 	return 0;
 }
 void main()
 {
-	posType start;
-	initStack();
-	printf("%s\nX:","输入起始位置:(0-7)" );
-	scanf("%d",&start.x);
+	PosType start;
+	InitStack();
+	printf("please input the origin palce (from 0 to 7)\nX:bu");
+	scanf("%d", &start.x);
 	printf("Y:");
-	scanf("%d",&start.y);
-	setWeight();
-	setMap();
-	horsePath(start);
-	outputPath();
-}
+	scanf("%d", &start.y);
+	setweight();
+	setmap();
+	HorsePath(start);
+	OutputPath();
+	getchar();
+	getchar();
+
+}	
+	
