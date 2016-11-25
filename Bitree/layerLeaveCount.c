@@ -50,7 +50,7 @@ void DepthLeave(BiTree root,int level)
 int main(){
  	BiTree T;
 	Creat_BiTree(&T);
-	PreTreeDepth(T,1);
+	// PreTreeDepth(T,1);
 	int level;
 	scanf("%d",&level);
 	DepthLeave(T,level);
