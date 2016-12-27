@@ -1,7 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
-#include <windows.h>
 
 #define N 27
 #define M 52
@@ -20,7 +19,7 @@ void HuffmanDecode(HuffmanTree *HT);
 void Menu(HuffmanTree *HT,float weight[],char Code[][N]);
 void PrintCode(float weight[],char Code[][N]);
 
-int main()
+void main()
 {
 	float weight[N];
 	HuffmanTree HT[M];
@@ -31,7 +30,6 @@ int main()
 	GetCode(HT,Code);
 
 	Menu(HT,weight,Code);
-	return 0;
 }
 
 void GetWeight(float weight[])
@@ -41,12 +39,11 @@ void GetWeight(float weight[])
 	int i;
 	int count[N]={0};
 
-    printf("ÕıÔÚ¶ÁÈ¡ÎÄ¼ş£¬»ñµÃÈ¨ÖØ£¬ÇëÉÔºó¡£¡£¡£\n\n");
-    Sleep(2000);
+    printf("æ­£åœ¨è¯»å–æ–‡ä»¶ï¼Œè·å¾—æƒé‡ï¼Œè¯·ç¨åã€‚ã€‚ã€‚\n\n");
 	fp=fopen("speech.txt","rt");
 	if(fp==NULL||fgetc(fp)==EOF)
 	{
-		printf("ÎÄ¼ş²»´æÔÚ»òÎª¿Õ£¬ÇëÈ·ÈÏºóÖØĞÂÔËĞĞ³ÌĞò£¡\n");
+		printf("æ–‡ä»¶ä¸å­˜åœ¨æˆ–ä¸ºç©ºï¼Œè¯·ç¡®è®¤åé‡æ–°è¿è¡Œç¨‹åºï¼\n");
 		exit(0);
 	}
 	rewind(fp);
@@ -68,7 +65,7 @@ void GetWeight(float weight[])
 		weight[i]=(float)count[i]/count[0]*100;
 	}
 	fclose(fp);
-	printf("\n\n»ñÈ¡È¨ÖØ³É¹¦£¡\n\n");
+	printf("\n\nè·å–æƒé‡æˆåŠŸï¼\n\n");
 }
 
 
@@ -77,8 +74,7 @@ void CreatHuffmanTree(HuffmanTree *HT,float weight[])
 	int i;
 	int min1,min2;
 
-    printf("ÕıÔÚ´´½¨HuffmanÊ÷£¬ÇëÉÔºó¡£¡£¡£\n\n");
-    Sleep(2000);
+    printf("æ­£åœ¨åˆ›å»ºHuffmanæ ‘ï¼Œè¯·ç¨åã€‚ã€‚ã€‚\n\n");
 	for(i=1;i<N;i++)
 	{
 		HT[i].weight=weight[i];
@@ -100,7 +96,7 @@ void CreatHuffmanTree(HuffmanTree *HT,float weight[])
 		HT[i].lchild=min1;		HT[i].rchild=min2;
 		HT[i].weight=HT[min1].weight+HT[min2].weight;
 	}
-	printf("\n\n³É¹¦´´½¨HuffmanÊ÷£¡\n\n");
+	printf("\n\næˆåŠŸåˆ›å»ºHuffmanæ ‘ï¼\n\n");
 }
 
 void Select(HuffmanTree *HT,int n,int *min1,int *min2)
@@ -134,8 +130,7 @@ void GetCode(HuffmanTree *HT,char Code[][N])
 	int i,child,parent,start;
 	char code[N]={"\0"};
 
-    printf("ÕıÔÚ¼ÆËã×Ö·û±àÂë£¬ÇëÉÔºó¡£¡£¡£\n\n");
-    Sleep(2000);
+    printf("æ­£åœ¨è®¡ç®—å­—ç¬¦ç¼–ç ï¼Œè¯·ç¨åã€‚ã€‚ã€‚\n\n");
 	for(i=1;i<N;i++)
 	{
 		child=i;
@@ -151,7 +146,7 @@ void GetCode(HuffmanTree *HT,char Code[][N])
 		}
 		strcpy(Code[i],&code[start]);
 	}
-	printf("\n\n³É¹¦»ñÈ¡±àÂë£¡\n\n");
+	printf("\n\næˆåŠŸè·å–ç¼–ç ï¼\n\n");
 }
 
 
@@ -160,7 +155,7 @@ void HuffmanEncode(char Code[][N],float weight[])
 	char ch;
 
 	fflush(stdin);
-	printf("ÇëÊäÈëĞèÒª±àÂëµÄ×Ö·û´®:\n");
+	printf("è¯·è¾“å…¥éœ€è¦ç¼–ç çš„å­—ç¬¦ä¸²:\n");
 	while((ch=getchar())!='\n')
 	{
 		if(weight[ch-'a'+1]==0)continue;
@@ -180,7 +175,7 @@ void HuffmanDecode(HuffmanTree *HT)
 	int temp=M-1;
 
 	fflush(stdin);
-	printf("ÇëÊäÈëĞèÒª½âÂëµÄ¶ş½øÖÆ´úÂë:\n");
+	printf("è¯·è¾“å…¥éœ€è¦è§£ç çš„äºŒè¿›åˆ¶ä»£ç :\n");
 	while((ch=getchar())!='\n')
 	{
 		if(ch=='0')temp=HT[temp].lchild;
@@ -204,12 +199,12 @@ void Menu(HuffmanTree *HT,float weight[],char Code[][N])
 	{
 	    printf("\n\n\n");
 	    printf("\t\t\t* * * * * * * * * * * * * * * * *\n");
-	    printf("\t\t\t*      1£ºÊäÈë×Ö·û½øĞĞ±àÂë      *\n");
-        printf("\t\t\t*      2£ºÊäÈë±àÂë½øĞĞ½âÂë      *\n");
-        printf("\t\t\t*      3£º´òÓ¡ËùÓĞ×Ö·û±àÂë      *\n");
-        printf("\t\t\t*      4£ºÍË³ö                  *\n");
+	    printf("\t\t\t*      1ï¼šè¾“å…¥å­—ç¬¦è¿›è¡Œç¼–ç       *\n");
+        printf("\t\t\t*      2ï¼šè¾“å…¥ç¼–ç è¿›è¡Œè§£ç       *\n");
+        printf("\t\t\t*      3ï¼šæ‰“å°æ‰€æœ‰å­—ç¬¦ç¼–ç       *\n");
+        printf("\t\t\t*      4ï¼šé€€å‡º                  *\n");
         printf("\t\t\t* * * * * * * * * * * * * * * * *\n");
-        printf("\t\t\tÇëÑ¡Ôñ£º  ");
+        printf("\t\t\tè¯·é€‰æ‹©ï¼š  ");
 		scanf("%c",&choose);
 		fflush(stdin);
 		printf("\n\n\n");
@@ -227,7 +222,7 @@ void Menu(HuffmanTree *HT,float weight[],char Code[][N])
         case '4':
             exit(0);
 		default:
-			printf("ÊäÈëÓĞÎó£¬ÇëÖØĞÂÊäÈë\n");
+			printf("è¾“å…¥æœ‰è¯¯ï¼Œè¯·é‡æ–°è¾“å…¥\n");
 			continue;
 		}
 	}
@@ -240,7 +235,7 @@ void PrintCode(float weight[],char Code[][N])
 {
     int i;
 
-    printf("\t\t\t×Ö·û    È¨ÖØ    ±àÂë\n");
+    printf("\t\t\tå­—ç¬¦    æƒé‡    ç¼–ç \n");
 	for(i=1;i<N;i++)
 	{
 		if(weight[i]==0)continue;
